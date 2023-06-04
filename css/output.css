@@ -91,9 +91,9 @@
 }
 
 .bgyg{
-  background-color:#ff4747;
+  background-color:#1d1f24;
   margin-top:33.3%;
-  color:white!important
+  color:#ff4747!important
 }
 
 /*TAILWIND*/
@@ -660,11 +660,6 @@ video {
   border-width: 1px
 }
 
-.bg-blue-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity))
-}
-
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem
@@ -698,9 +693,4 @@ video {
 
 .outline {
   outline-style: solid
-}
-
-.hover\:bg-blue-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(29 78 216 / var(--tw-bg-opacity))
 }
