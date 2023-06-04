@@ -188,6 +188,8 @@ content="The official homepage of the yEAh Games Network.">
   display: block;
 }
 
+.profilemenu{max-width:50px!important;left:93%!important;position:absolute!important}
+
   </style>
 </head>
 <body class="home home-1 has-block-heading-line">
@@ -261,7 +263,6 @@ content="The official homepage of the yEAh Games Network.">
                         <div id="profileContainer">
                             <div id="profilePicture"></div>
                             <div id="dropdownContainer">
-                              <div id="dropdownMenu"></div>
                             </div>
                           </div>
 
@@ -323,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var dropdownMenu = document.createElement('div');
     dropdownMenu.id = 'dropdownMenu';
-    dropdownMenu.classList.add('dropdown-menu');
+    dropdownMenu.classList.add('dropdown-menu', 'profilemenu');
 
     var dropdownItems = [
       { text: 'Profile', link: 'https://members.yeahgames.net/@' + userData.username },
@@ -391,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     
                 </div><!-- .navigation-bar__inner -->
             </nav><!-- Navigation-bar -->
+            <div id="dropdownMenu"></div>
         </header><!-- Site header -->
 
 
