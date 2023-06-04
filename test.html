@@ -260,8 +260,11 @@ content="The official homepage of the yEAh Games Network.">
                         <div id="loginContainer" style="float:right!important"></div>
                         <div id="profileContainer">
                             <div id="profilePicture"></div>
-                            <div id="dropdownMenu"></div>
+                            <div id="dropdownContainer">
+                              <div id="dropdownMenu"></div>
+                            </div>
                           </div>
+
                           
 
                            
@@ -315,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var dropdownContainer = document.createElement('div');
     dropdownContainer.id = 'dropdownContainer';
+    dropdownContainer.classList.add('dropdown-container');
 
     var dropdownMenu = document.createElement('div');
     dropdownMenu.id = 'dropdownMenu';
@@ -372,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loginContainer.appendChild(loginButton);
   }
 });
+
 
 
 
