@@ -171,9 +171,25 @@ content="The official homepage of the yEAh Games Network.">
     .network-nav {
       z-index: 99999
     }
+
+    #profileContainer {
+  position: relative;
+}
+
+#dropdownMenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+}
+
+#dropdownMenu.show {
+  display: block;
+}
+
   </style>
 </head>
-<div id="profileDropdown" style="all: unset;"></div>
 <body class="home home-1 has-block-heading-line">
     <!-- .site-wrapper -->
     <div class="site-wrapper">
@@ -242,8 +258,12 @@ content="The official homepage of the yEAh Games Network.">
                     <div class="header-logo">
                         <div title="Loading your yEAh network account..." id="loadingContainer"></div>
                         <div id="loginContainer" style="float:right!important"></div>
-                        <div id="profilePicture"></div>
-                        
+                        <div id="profileContainer">
+                            <div id="profilePicture"></div>
+                            <div id="dropdownMenu"></div>
+                          </div>
+                          
+
                            
                     </div>
                     
@@ -274,12 +294,11 @@ content="The official homepage of the yEAh Games Network.">
                             <script src="https://accounts.yeahgames.net/system/all/sha256.js"></script>
                             <script src="https://accounts.yeahgames.net/system/validation/main.js"></script>
                             <script>
-                             document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
   var userData = validateUserDataFromCookie();
   var loadingContainer = document.getElementById('loadingContainer');
   var loginContainer = document.getElementById('loginContainer');
   var profilePictureContainer = document.getElementById('profilePicture');
-  var dropdownContainer = document.getElementById('profileDropdown');
 
   var currentUrl = window.location.href;
   var loginUrl = 'https://accounts.yeahgames.net/login?continue=' + encodeURIComponent(currentUrl);
@@ -288,16 +307,14 @@ content="The official homepage of the yEAh Games Network.">
     var profilePicture = document.createElement('img');
     profilePicture.src = 'https://ugc.yeahgames.net/profile/p/default/png/@' + userData.username + '.png';
     profilePicture.alt = 'Profile picture';
-    profilePicture.title = '@' + userData.username + '\'s network account.'
+    profilePicture.title = '@' + userData.username + '\'s network account.';
     profilePicture.classList.add('rounded-full', 'profile-picture', 'float-right');
     profilePicture.addEventListener('error', function () {
       profilePicture.src = 'https://ugc.yeahgames.net/profile/p/default/png/default.png'; // Default profile picture
     });
-    profilePicture.addEventListener('click', function (event) {
-      event.preventDefault();
-      var dropdownMenu = document.getElementById('dropdownMenu');
-      dropdownMenu.classList.toggle('show');
-    });
+
+    var dropdownContainer = document.createElement('div');
+    dropdownContainer.id = 'dropdownContainer';
 
     var dropdownMenu = document.createElement('div');
     dropdownMenu.id = 'dropdownMenu';
@@ -317,8 +334,21 @@ content="The official homepage of the yEAh Games Network.">
       dropdownMenu.appendChild(dropdownItem);
     });
 
-    profilePictureContainer.appendChild(profilePicture);
     dropdownContainer.appendChild(dropdownMenu);
+    profilePictureContainer.appendChild(profilePicture);
+    profilePictureContainer.appendChild(dropdownContainer);
+
+    profilePicture.addEventListener('click', function (event) {
+      event.preventDefault();
+      dropdownMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function (event) {
+      var targetElement = event.target;
+      if (!dropdownMenu.contains(targetElement) && !profilePicture.contains(targetElement)) {
+        dropdownMenu.classList.remove('show');
+      }
+    });
 
     loadingContainer.style.display = 'none';
     loginContainer.style.display = 'block';
@@ -341,17 +371,8 @@ content="The official homepage of the yEAh Games Network.">
 
     loginContainer.appendChild(loginButton);
   }
-
-  document.addEventListener('click', function (event) {
-    var targetElement = event.target;
-    var dropdownMenu = document.getElementById('dropdownMenu');
-    var profilePicture = document.querySelector('.profile-picture');
-
-    if (!dropdownMenu.contains(targetElement) && !profilePicture.contains(targetElement)) {
-      dropdownMenu.classList.remove('show');
-    }
-  });
 });
+
 
 
                           
