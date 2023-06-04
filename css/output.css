@@ -1,6 +1,104 @@
-/*
-! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
-*/
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  margin:33.3%
+}
+
+.loading-spinner {
+  border: 8px solid #1d1f24;
+  border-top: 8px solid #ff4747;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  animation: spin 1.5s linear infinite;
+  margin-top:40.3%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.dropdown-menu {
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.rounded-full {
+  border-radius: 50%;
+}
+
+.profile-container {
+  position: relative;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #CBD5E0;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 120px;
+  background-color: #1f2937;
+  color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #4a5568;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f7fafc;
+}
+
+.hover\:bg-blue-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.bgyg{
+  background-color:#ff4747;
+  margin-top:33.3%;
+  color:white!important
+}
+
+/*TAILWIND*/
+
+/*! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com*/
 
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -469,7 +567,7 @@ video {
   --tw-backdrop-invert:  ;
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
+  --tw-backdrop-sepia:  
 }
 
 ::backdrop {
@@ -519,163 +617,90 @@ video {
   --tw-backdrop-invert:  ;
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
+  --tw-backdrop-sepia:  
 }
 
 .absolute {
-  position: absolute;
+  position: absolute
 }
 
 .relative {
-  position: relative;
+  position: relative
 }
 
 .float-right {
-  float: right;
+  float: right
 }
 
 .block {
-  display: block;
+  display: block
 }
 
-.flex {
-  display: flex;
+.list-item {
+  display: list-item
+}
+
+.hidden {
+  display: none
 }
 
 .transform {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
 .rounded {
-  border-radius: 0.25rem;
+  border-radius: 0.25rem
 }
 
 .rounded-full {
-  border-radius: 9999px;
+  border-radius: 9999px
 }
 
 .border {
-  border-width: 1px;
+  border-width: 1px
 }
 
 .bg-blue-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity))
 }
 
 .px-4 {
   padding-left: 1rem;
-  padding-right: 1rem;
+  padding-right: 1rem
 }
 
 .py-2 {
   padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.5rem
+}
+
+.text-left {
+  text-align: left
+}
+
+.text-center {
+  text-align: center
+}
+
+.text-right {
+  text-align: right
 }
 
 .font-bold {
-  font-weight: 700;
+  font-weight: 700
 }
 
 .text-white {
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
-.transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
-
-.loading-spinner {
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #3498db;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.dropdown-menu {
-  display: none;
-}
-
-.dropdown-menu.show {
-  display: block;
-}
-
-.rounded-full {
-  border-radius: 50%;
-}
-
-.profile-container {
-  position: relative;
-}
-
-.profile-picture {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #CBD5E0;
-  cursor: pointer;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  min-width: 120px;
-  background-color: #1f2937;
-  color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 10;
-  display: none;
-}
-
-.dropdown-menu.show {
-  display: block;
-}
-
-.dropdown-item {
-  display: block;
-  padding: 8px 12px;
-  font-size: 14px;
-  color: #4a5568;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.dropdown-item:hover {
-  background-color: #f7fafc;
+.outline {
+  outline-style: solid
 }
 
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity))
 }
