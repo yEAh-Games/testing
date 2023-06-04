@@ -301,6 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var userData = validateUserDataFromCookie();
   var loadingContainer = document.getElementById('loadingContainer');
   var loginContainer = document.getElementById('loginContainer');
+  var profileContainer = document.getElementById('profileContainer');
   var profilePictureContainer = document.getElementById('profilePicture');
 
   var currentUrl = window.location.href;
@@ -339,8 +340,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dropdownContainer.appendChild(dropdownMenu);
-    profilePictureContainer.appendChild(profilePicture);
-    profilePictureContainer.appendChild(dropdownContainer);
+    profileContainer.appendChild(profilePicture);
+    profileContainer.appendChild(dropdownContainer);
 
     profilePicture.addEventListener('click', function (event) {
       event.preventDefault();
