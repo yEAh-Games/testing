@@ -239,7 +239,7 @@ content="The official homepage of the yEAh Games Network.">
                 <div class="navigation-bar__section flex-box align-item-center" style="float:right!important;right:0px!important">
                     <div class="header-logo">
                         <a href="https://www.yeahgames.net">
-                            <div id="loadingContainer"></div>
+                            <div title="Loading your yEAh network account..." id="loadingContainer"></div>
                             <div id="loginContainer" style="float:right!important"></div>
                             <div id="profileContainer"></div>
 
@@ -261,7 +261,7 @@ content="The official homepage of the yEAh Games Network.">
                   
 
                     <div class="navigation-bar__section">
-                        <button type="submit" title="Navigation bar"
+                        <button type="submit"
                             class="navigation-bar-search navigation-bar-btn js-search-dropdown-toggle"></button>
                            
                           
@@ -283,7 +283,6 @@ content="The official homepage of the yEAh Games Network.">
                                 var loginUrl = 'https://accounts.yeahgames.net/login?continue=' + encodeURIComponent(currentUrl);
                           
                                 if (userData) {
-                                  // User is logged in
                                   var profilePicture = document.createElement('img');
                                   profilePicture.src = 'https://ugc.yeahgames.net/profile/p/default/png/@' + userData.username + '.png';
                                   profilePicture.alt = 'Profile Picture';
