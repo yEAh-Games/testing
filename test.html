@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<html>
+
+<head>
+  <title>Protected Site</title>
+</head>
 
 <body>
   <script src="https://accounts.yeahgames.net/system/all/sha256.js"></script>
@@ -30,10 +35,22 @@
 
     // Function to check if the user is authorized to access the protected site
     function checkAuthorization(username, subdomain) {
+      var psCookie = getCookie('yeahgames_ps');
+      var vCookie = getCookie('yeahgames_ps_v');
+
+      if (psCookie && vCookie) {
+        var userData = getProtectedSitesFromCookies();
+        if (userData) {
+          var protectedSites = userData.protectedSites;
+          return Promise.resolve(protectedSites[subdomain] === true);
+        }
+      }
+
+      // If cookies are not present, fetch from the database
       return fetchProtectedSitesFromDatabase(username)
         .then(function(protectedSites) {
-          var isAuthorized = protectedSites[subdomain] === true;
-          return isAuthorized;
+          setProtectedSitesCookies(username, protectedSites);
+          return protectedSites[subdomain] === true;
         });
     }
 
@@ -133,6 +150,15 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      var yeahgames_v = getCookie('yeahgames_v');
+      var yeahgames_userdata = getCookie('yeahgames_userdata');
+
+      if (!yeahgames_v || !yeahgames_userdata) {
+        // User is not logged in, redirect to login page
+        redirectToLogin();
+        return;
+      }
+
       var userData = getProtectedSitesFromCookies();
 
       if (userData) {
@@ -160,10 +186,11 @@
             }
           });
       } else {
-        // User is not logged in, redirect to login page
+        // User data is not valid, redirect to login page
         redirectToLogin(true);
       }
     });
   </script>
 </body>
+
 </html>
