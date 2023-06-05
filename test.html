@@ -13,16 +13,13 @@
       height: 100%;
     }
 
-    iframe {
-      display: block;
+    #protectedContent {
+      display: none;
       position: absolute;
       top: 0;
       left: 0;
       bottom: 0;
       right: 0;
-      border: none;
-      height: 100%;
-      width: 100%;
     }
   </style>
 </head>
@@ -31,6 +28,7 @@
   <div class="loading-overlay">
     <div class="loader"></div>
   </div>
+  <div id="protectedContent"></div>
   <script src="https://accounts.yeahgames.net/system/all/sha256.js"></script>
   <script src="https://accounts.yeahgames.net/system/validation/main.js"></script>
 
@@ -63,7 +61,6 @@
           return protectedSites[subdomain] === true;
         });
     }
-
 
     function redirectToLogin(corrupted) {
       var loginUrl = 'https://accounts.yeahgames.net/login';
@@ -113,34 +110,42 @@
         .then(function (isAuthorized) {
           if (isAuthorized) {
             var token = '3258xukj1pdvjerq7elfh19bc83mvzsi1bhozxox9thk7mscyvyyphud';
-            var iframe = document.createElement('iframe');
-            iframe.src = 'https://' + token + '-secure.yeahgames.net' + window.location.pathname;
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
+            var protectedContent = document.getElementById('protectedContent');
 
-            iframe.addEventListener('load', function () {
-              iframe.contentWindow.addEventListener('DOMContentLoaded', function () {
-                var iframeTitle = iframe.contentDocument.title;
-                document.title = iframeTitle;
-                console.log('Retrieved protected page:', iframeTitle);
-              });
-            });
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                  protectedContent.innerHTML = xhr.responseText;
+                  protectedContent.style.display = 'block';
+                  var iframeTitle = document.title;
+                  console.log('Retrieved protected page:', iframeTitle);
+                } else {
+                  var errorIframe = document.createElement('iframe');
+                  errorIframe.src = 'https://www.yeahgames.net/errors/http/401';
+                  errorIframe.style.width = '100%';
+                  errorIframe.style.height = '100%';
+                  document.body.appendChild(errorIframe);
+                }
 
-            document.body.appendChild(iframe);
+                var loaderOverlay = document.querySelector('.loading-overlay');
+                loaderOverlay.style.display = 'none';
+              }
+            };
+
+            xhr.open('GET', 'https://' + token + '-secure.yeahgames.net' + window.location.pathname, true);
+            xhr.send();
           } else {
             var errorIframe = document.createElement('iframe');
             errorIframe.src = 'https://www.yeahgames.net/errors/http/401';
             errorIframe.style.width = '100%';
             errorIframe.style.height = '100%';
             document.body.appendChild(errorIframe);
+
+            var loaderOverlay = document.querySelector('.loading-overlay');
+            loaderOverlay.style.display = 'none';
           }
         });
-    });
-  </script>
-  <script>
-    window.addEventListener('load', function () {
-      var loaderOverlay = document.querySelector('.loading-overlay');
-      loaderOverlay.style.display = 'none';
     });
   </script>
 </body>
