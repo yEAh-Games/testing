@@ -58,11 +58,8 @@
     }
     
     
-    function redirectToLogin(corrupted) {
-      var loginUrl = 'https://accounts.yeahgames.net/logout';
-      if (corrupted) {
-        loginUrl += '?corrupted=true&continue=';
-      }
+    function redirectToLogin() {
+      var loginUrl = 'https://accounts.yeahgames.net/login?continue=' + window.location.href;
       window.location.href = loginUrl;
     }
 
