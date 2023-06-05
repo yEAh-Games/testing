@@ -7,11 +7,11 @@
 
 <body>
   <script src="https://accounts.yeahgames.net/system/all/sha256.js"></script>
-  <script src="https://accounts.yeahgames.net/system/validation/main.js"></script>
+  <script src="https://accounts.yeahgames.net/system/validation/validation.js"></script>
 
   <script>
-    // Function to retrieve the protected sites array for the user from the database
-    function fetchProtectedSitesFromDatabase(username) {
+    // Function to fetch the user's protected sites from the database
+    function fetchProtectedSites(username) {
       return fetch('https://accounts.yeahgames.net/data/accounts.json')
         .then(function(response) {
           return response.json();
@@ -35,7 +35,7 @@
 
     // Function to check if the user is authorized to access the protected site
     function checkAuthorization(username, subdomain) {
-      return fetchProtectedSitesFromDatabase(username)
+      return fetchProtectedSites(username)
         .then(function(protectedSites) {
           return protectedSites[subdomain] === true;
         });
@@ -51,42 +51,36 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      var yeahgames_v = getCookie('yeahgames_v');
-      var yeahgames_userdata = getCookie('yeahgames_userdata');
+      var userData = validateUserDataFromCookie();
 
-      if (!yeahgames_v || !yeahgames_userdata) {
-        // User is not logged in, redirect to login page
-        redirectToLogin();
+      if (!userData) {
+        // User is not logged in or data is invalid, redirect to login page
+        redirectToLogin(true);
         return;
       }
 
-      var username = getUsernameFromCookies();
+      var username = userData.username;
+      var subdomain = 'quotes'; // Replace with the actual subdomain of the protected site
 
-      if (username) {
-        var subdomain = 'quotes'; // Replace with the actual subdomain of the protected site
-
-        checkAuthorization(username, subdomain)
-          .then(function(isAuthorized) {
-            if (isAuthorized) {
-              // User is authorized, display the actual site
-              var iframe = document.createElement('iframe');
-              iframe.src = 'https://3258xukj1pdvjerq7elfh19bc83mvzsi1bhozxox9thk7mscyvyyphud-secure.yeahgames.net/' + window.location.pathname; // Replace with the actual site URL
-              iframe.style.width = '100%';
-              iframe.style.height = '100%';
-              document.body.appendChild(iframe);
-            } else {
-              // User is not authorized, display the error page
-              var errorIframe = document.createElement('iframe');
-              errorIframe.src = 'https://www.yeahgames.net/errors/http/401';
-              errorIframe.style.width = '100%';
-              errorIframe.style.height = '100%';
-              document.body.appendChild(errorIframe);
-            }
-          });
-      } else {
-        // User data is not valid, redirect to login page
-        redirectToLogin(true);
-      }
+      checkAuthorization(username, subdomain)
+        .then(function(isAuthorized) {
+          if (isAuthorized) {
+            // User is authorized, display the actual site
+            var token = 'your-token'; // Replace with the actual token for the secure site
+            var iframe = document.createElement('iframe');
+            iframe.src = 'https://' + token + '-secure.yeahgames.net' + window.location.pathname;
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            document.body.appendChild(iframe);
+          } else {
+            // User is not authorized, display the error page
+            var errorIframe = document.createElement('iframe');
+            errorIframe.src = 'https://www.yeahgames.net/errors/http/401';
+            errorIframe.style.width = '100%';
+            errorIframe.style.height = '100%';
+            document.body.appendChild(errorIframe);
+          }
+        });
     });
   </script>
 </body>
