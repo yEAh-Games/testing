@@ -7,7 +7,7 @@
 
 <body>
   <script src="https://accounts.yeahgames.net/system/all/sha256.js"></script>
-  <script src="https://accounts.yeahgames.net/system/validation/validation.js"></script>
+  <script src="https://accounts.yeahgames.net/system/validation/main.js"></script>
 
   <script>
     // Function to fetch the user's protected sites from the database
@@ -50,7 +50,30 @@
       window.location.href = loginUrl;
     }
 
+    // Function to check if the 'yeahgames_userdata' cookie exists
+    function checkCookieExistence() {
+      var cookies = document.cookie.split(';');
+      var cookieExists = false;
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+
+        if (cookie.startsWith('yeahgames_userdata=')) {
+          cookieExists = true;
+          break;
+        }
+      }
+
+      return cookieExists;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+      if (!checkCookieExistence()) {
+        // 'yeahgames_userdata' cookie doesn't exist, redirect to login page
+        redirectToLogin();
+        return;
+      }
+
       var userData = validateUserDataFromCookie();
 
       if (!userData) {
