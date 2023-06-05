@@ -118,9 +118,11 @@
             iframe.style.height = '100%';
 
             iframe.addEventListener('load', function () {
-              var iframeTitle = iframe.contentDocument.title;
-              document.title = iframeTitle;
-              console.log('Retrieved protected page:', iframeTitle);
+              iframe.contentWindow.addEventListener('DOMContentLoaded', function () {
+                var iframeTitle = iframe.contentDocument.title;
+                document.title = iframeTitle;
+                console.log('Retrieved protected page:', iframeTitle);
+              });
             });
 
             document.body.appendChild(iframe);
