@@ -58,8 +58,15 @@
     }
     
     
-    function redirectToLogin() {
-      var loginUrl = 'https://accounts.yeahgames.net/login?continue=' + window.location.href;
+    function redirectToLogin(corrupted) {
+      var loginUrl = 'https://accounts.yeahgames.net/login';
+      if (corrupted) {
+        var continueUrl = encodeURIComponent('https://accounts.yeahgames.net/login?corrupted=true&continue=' + window.location.href);
+        loginUrl = 'https://accounts.yeahgames.net/logout?continue=' + continueUrl;
+      } else {
+        var continueUrl = encodeURIComponent(window.location.href);
+        loginUrl += '?continue=' + continueUrl;
+      }
       window.location.href = loginUrl;
     }
 
@@ -103,6 +110,13 @@
             iframe.src = 'https://' + token + '-secure.yeahgames.net' + window.location.pathname;
             iframe.style.width = '100%';
             iframe.style.height = '100%';
+
+            iframe.addEventListener('load', function() {
+              var iframeTitle = iframe.contentDocument.title;
+              document.title = iframeTitle; 
+              console.log('Retrieved protected page:', iframeTitle);
+            });
+
             document.body.appendChild(iframe);
           } else {
             var errorIframe = document.createElement('iframe');
