@@ -10,14 +10,13 @@
   <script src="https://accounts.yeahgames.net/system/validation/main.js"></script>
 
   <script>
-    // Function to fetch the user's protected sites from the database
     function fetchProtectedSites(username) {
       return fetch('https://accounts.yeahgames.net/data/accounts.json')
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
-          var user = data.find(function(user) {
+        .then(function (data) {
+          var user = data.find(function (user) {
             return user.username === username;
           });
 
@@ -27,30 +26,29 @@
             return {};
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error('Error fetching protected sites:', error);
           return {};
         });
     }
 
-    // Function to check if the user is authorized to access the protected site
     function checkAuthorization(username, subdomain) {
       return fetchProtectedSites(username)
-        .then(function(protectedSites) {
+        .then(function (protectedSites) {
           return protectedSites[subdomain] === true;
         });
     }
 
-    // Function to redirect to login with optional corrupted parameter
+
     function redirectToLogin(corrupted) {
-      var loginUrl = 'https://accounts.yeahgames.net/login';
+      var loginUrl = 'https://accounts.yeahgames.net/logout';
       if (corrupted) {
-        loginUrl += '?corrupted=true';
+        loginUrl += '?corrupted=true&continue=' + encodeURIComponent(window.location.href);
       }
       window.location.href = loginUrl;
     }
 
-    // Function to check if the 'yeahgames_userdata' cookie exists
+
     function checkCookieExistence() {
       var cookies = document.cookie.split(';');
       var cookieExists = false;
@@ -67,9 +65,8 @@
       return cookieExists;
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       if (!checkCookieExistence()) {
-        // 'yeahgames_userdata' cookie doesn't exist, redirect to login page
         redirectToLogin();
         return;
       }
@@ -77,26 +74,23 @@
       var userData = validateUserDataFromCookie();
 
       if (!userData) {
-        // User is not logged in or data is invalid, redirect to login page
         redirectToLogin(true);
         return;
       }
 
       var username = userData.username;
-      var subdomain = 'quotes'; // Replace with the actual subdomain of the protected site
+      var subdomain = 'quotes';
 
       checkAuthorization(username, subdomain)
-        .then(function(isAuthorized) {
+        .then(function (isAuthorized) {
           if (isAuthorized) {
-            // User is authorized, display the actual site
-            var token = 'your-token'; // Replace with the actual token for the secure site
+            var token = '3258xukj1pdvjerq7elfh19bc83mvzsi1bhozxox9thk7mscyvyyphud';
             var iframe = document.createElement('iframe');
             iframe.src = 'https://' + token + '-secure.yeahgames.net' + window.location.pathname;
             iframe.style.width = '100%';
             iframe.style.height = '100%';
             document.body.appendChild(iframe);
           } else {
-            // User is not authorized, display the error page
             var errorIframe = document.createElement('iframe');
             errorIframe.src = 'https://www.yeahgames.net/errors/http/401';
             errorIframe.style.width = '100%';
